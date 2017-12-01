@@ -1,0 +1,17 @@
+reset;
+
+model phillipsMultiCost.mod; 
+
+data F:\JavierFajardo\SPARC\RProjects\Transitions\RCP85_spp73.dat; 
+
+option solver './gurobi';
+
+solve;
+
+print {s in SP,v in V}: s,v,max{t in 0..T} y[s,v,t] > F:\JavierFajardo\SPARC\RProjects\Transitions\RCP85_spp73.txt;
+close F:\JavierFajardo\SPARC\RProjects\Transitions\RCP85_spp73.txt;
+
+print {s in SP,v in V, t in 0..T}: s,v,t,y[s,v,t] > F:\JavierFajardo\SPARC\RProjects\Transitions\RCP85Y_spp73.txt;
+close F:\JavierFajardo\SPARC\RProjects\Transitions\RCP85Y_spp73.txt;
+
+
