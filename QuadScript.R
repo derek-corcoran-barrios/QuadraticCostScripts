@@ -1,12 +1,12 @@
 MultiSppQuad <- function(Stacklist, Dist, name, nchains = 100, costlayer){
-
+  
   Masklayer <- costlayer
   values(Masklayer) <- ifelse(is.na(values(Masklayer)), NA, 1)
   for (i in 1:length(Stacklist)){
     Stacklist[[i]] <- Stacklist[[i]] * Masklayer
   }
   accCost2 <- function(x, fromCoords) {
-
+    
     fromCells <- cellFromXY(x, fromCoords)
     tr <- transitionMatrix(x)
     tr <- rBind(tr, rep(0, nrow(tr)))
@@ -31,16 +31,16 @@ MultiSppQuad <- function(Stacklist, Dist, name, nchains = 100, costlayer){
   Suitability <- do.call("rbind", Suitabilities)
   s <- Suitability %>% group_by(ID) %>% summarise(SUMA = sum(Suitability)) %>% filter(SUMA > 0)
   Suitability <- Suitability[Suitability$ID %in% s$ID,]
-
-
+  
+  
   Spps <- unique(Suitability$Spp)
-
+  
   Suitability <- Suitability[,c(4,1,2,3)]
-
+  
   Suitabilities <- list()
   for (i in Spps){
     Suitabilities[[i]] <- dplyr::filter(Suitability, Spp == i)
-
+    
     temp <-  split(Suitabilities[[i]], Suitabilities[[i]]$Time)
     Suitabilities[[i]] <- do.call(cbind, lapply(1:length(temp), function(i){
       if (i == 1){
@@ -55,30 +55,30 @@ MultiSppQuad <- function(Stacklist, Dist, name, nchains = 100, costlayer){
       }
     }))
   }
-
+  
   Suitability <-do.call("rbind", Suitabilities)
-
+  
   conns <- list()
   for(j in 1:length(Stacklist)){
     Raster <- sum(Stacklist[[j]])
-
+    
     Raster[values(Raster) > 0] = 1
     Raster[values(Raster) == 0] = NA
-
+    
     h16  <- transition(Raster, transitionFunction=function(x){1},16,symm=FALSE)
-
+    
     h16   <- geoCorrection(h16, scl=FALSE)
-
+    
     ID <-c(1:ncell(Raster))[!is.na(values(Raster))]
-
+    
     B <- xyFromCell(Raster, cell = ID)
-
+    
     connections <- list()
     #For each pair of cells in B
     for (i in 1:nrow(B)){
       #Create a temporal raster for each row with the distance from cell xy to all other cells
       temp <- accCost2(h16,B[i,])
-      index <- which(temp < Dist[i])
+      index <- which(temp < Dist)
       connections[[i]] <- cbind(ID[i], index, temp[index])
     }
     #Get everything together as a large data frame
@@ -90,11 +90,11 @@ MultiSppQuad <- function(Stacklist, Dist, name, nchains = 100, costlayer){
   }
   connections <- conns
   connections <- do.call("rbind", connections)
-
+  
   Nchains <- data.frame(Spp = Spps, Nchains = nchains, Space = "\n")
   Cost <- values(costlayer)[unique(unique(connections$to), unique(connections$to))]
-
-
+  
+  
   sink(paste0(name, ".dat"))
   cat(c("set V :=", unique(unique(connections$to), unique(connections$to)), ";"))
   cat("\n")
