@@ -19,13 +19,14 @@ The function depends on the *dplyr*, *gdistance*, *raster* and *tidyr* packages
 
 as an example to run the data using the data in the repository:
 
+```
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(dplyr, gdistance, raster, tidyr)
 
 load("BinSpp.rda")
 load("Cost.rda")
 MultiSppQuad(Stacklist = BinSpp, Dist = 1000000, name = "Two", costlayer = Cost)
-
+```
 
 ### Going from .dat files to optimization results
 
