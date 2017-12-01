@@ -78,7 +78,7 @@ MultiSppQuad <- function(Stacklist, Dist, name, nchains = 100, costlayer){
     for (i in 1:nrow(B)){
       #Create a temporal raster for each row with the distance from cell xy to all other cells
       temp <- accCost2(h16,B[i,])
-      index <- which(temp < Dist)
+      index <- which(temp < Dist[i])
       connections[[i]] <- cbind(ID[i], index, temp[index])
     }
     #Get everything together as a large data frame
