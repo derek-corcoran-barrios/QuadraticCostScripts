@@ -41,9 +41,9 @@ This will create a file called *Two.dat* in your working directory with the data
 
 The *.dat* file will be passed through a model (*.mod* file). In this repository there are two models:
 
-* *MultiCost.mod:* Which will take a *.dat* database with one or multiple species and a layer of costs asociated with it, and minimize the buying cost asuming quadratic costs for the flow.
+* *MultiCost.mod:* Which will take a *.dat* database with one or multiple species and a layer of costs associated with it, and minimize the buying cost assuming quadratic costs for the flow.
 
-* *MultiCostLM.mod:* Which will take a *.dat* database with one or multiple species and a layer of costs asociated with it, and minimize the buying cost asuming linear costs for the flow, this model was included only to compare the results of the quadratic cost.
+* *MultiCostLM.mod:* Which will take a *.dat* database with one or multiple species and a layer of costs associated with it, and minimize the buying cost assuming linear costs for the flow, this model was included only to compare the results of the quadratic cost.
 
 #### Running the models
 
@@ -70,7 +70,7 @@ After getting the results from ampl, we can import them to analyse them back in 
 
 * *Stacklist:* The original stacklist used in function MultiSppQuad
 * *AmplFile:* The path to the file given by the AMPL model
-* *plot:* logical, wether to plot or not the stack, defaults to TRUE
+* *plot:* logical, weather to plot or not the stack, defaults to TRUE
 
 This function will return a list with a list with a stack with the index 
 for each species, and a data frame with the results, this can be tested with the result (*Two.txt*) included in this repository:
@@ -103,9 +103,9 @@ In order to inspect the Species flow more closely the *GetQuadFlow* function was
 
 * *Stacklist:* The original stacklist used in function MultiSppQuad.
 * *AmplFile:* The path to the file given by the AMPL model.
-* *Species:*	An interger number of the species to be ploted. Even when the plot is made for this species, the data frame is made for all the species.
-* *plot:*	logical, wether to plot or not the stack, defaults to TRUE
-* *gif:*	logical, wether to make a gif or not the stack, defaults to FALSE
+* *Species:*	An integer number of the species to be plotted. Even when the plot is made for this species, the data frame is made for all the species.
+* *plot:*	logical, whether to plot or not the stack, defaults to TRUE
+* *gif:*	logical, whether to make a gif or not the stack, defaults to FALSE
 
 An example using the data in the repository:
 
