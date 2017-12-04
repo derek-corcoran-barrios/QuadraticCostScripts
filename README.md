@@ -82,6 +82,19 @@ data("BinSpp")
 Index <- GetQuadIndex(Stacklist = BinSpp, AmplFile = "https://raw.githubusercontent.com/derek-corcoran-barrios/QuadraticCostScripts/master/Two.txt")
 ```
 
+![title](https://github.com/derek-corcoran-barrios/QuadraticCostScripts/blob/master/Results1.png)
 
+```
+head(Index[[2]])
+```
+
+|Species  | CellID|     Index|
+|:--------|------:|---------:|
+|SpeciesA |      3| 0.1848551|
+|SpeciesA |      4| 1.0000000|
+|SpeciesA |      5| 1.0000000|
+|SpeciesA |      6| 1.0000000|
+|SpeciesA |      7| 1.0000000|
+|SpeciesA |     14| 0.8151449|
 #### Turning the stack into a gif
 
