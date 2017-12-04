@@ -33,7 +33,7 @@ data("Cost")
 MultiSppQuad(Stacklist = BinSpp, Dist = 1000000, name = "Two", costlayer = Cost, nchains = 8)
 ```
 
-This will create a file called *Two.dat* in your working directory with the data of the two hypothetical species developed for the package.
+This will create a file called *Two.dat* in your working directory with the data of the two hypothetical species developed for the package, the result of this is stored in this repository.
 
 ### Going from .dat files to optimization results
 
@@ -73,7 +73,15 @@ After getting the results from ampl, we can import them to analyse them back in 
 * *plot:* logical, wether to plot or not the stack, defaults to TRUE
 
 This function will return a list with a list with a stack with the index 
-for each species, and a data frame with the results
+for each species, and a data frame with the results, this can be tested with the result (*Two.txt*) included in this repository:
+
+```
+#Load the data
+data("BinSpp")
+#Use the function with the 
+Index <- GetQuadIndex(Stacklist = BinSpp, AmplFile = "https://raw.githubusercontent.com/derek-corcoran-barrios/QuadraticCostScripts/master/Two.txt")
+```
+
 
 #### Turning the stack into a gif
 
