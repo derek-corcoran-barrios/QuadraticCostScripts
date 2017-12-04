@@ -2,16 +2,16 @@ reset;
 
 model MultiCost.mod; 
 
-data F:\SPARC\RProjects\Transitions\RCP85_spp73.dat; 
+data Two.dat; 
 
 option solver './gurobi';
 
 solve;
 
-print {s in SP,v in V}: s,v,max{t in 0..T} y[s,v,t] > F:\SPARC\RProjects\Transitions\RCP85_spp73.txt;
-close F:\SPARC\RProjects\Transitions\RCP85_spp73.txt;
+print {s in SP,v in V}: s,v,max{t in 0..T} y[s,v,t] > Two.txt;
+close Two.txt;
 
-print {s in SP,v in V, t in 0..T}: s,v,t,y[s,v,t] > F:\SPARC\RProjects\Transitions\RCP85Y_spp73.txt;
-close F:\SPARC\RProjects\Transitions\RCP85Y_spp73.txt;
+print {s in SP,v in V, t in 0..T}: s,v,t,y[s,v,t] > TwoY.txt;
+close TwoY.txt;
 
 

@@ -123,36 +123,35 @@ $(document).ready(function () {
 
 <div id="scripts-for-network-flow-optimization-with-quadratic-cost" class="section level2">
 <h2>Scripts for network flow optimization with quadratic cost</h2>
-<p>In this repository I have the scripts needed to go from niche model projections. To the optimization in ampl.</p>
+<p>In this repository I have the scripts needed to go from niche model projections to the optimization in ampl.</p>
 <div id="going-from-niche-models-to-.dat-files" class="section level3">
 <h3>Going from niche models to .dat files</h3>
-<p>A package was developed with the R functions to use the ampl model, the source package is in this repocitory, or to install it from github use the following code:</p>
+<p>The <em>QuadCostAmpl</em> package was developed with the R functions to go from the Species Distribution Models of Species in several time slices to the data needed by the ampl model. The source package is in this repository (<em>QuadCostAmpl_0.1.0.tar.gz</em>), or if you prefer to install it from github use the following code:</p>
 <pre><code>devtools::install_github(&quot;derek-corcoran-barrios/QuadCostAmpl&quot;)</code></pre>
-<p>The function needed to go from the projected rasters to the .dat files needed by the AMPL its called <em>MultiSppQuad</em>, which has the following parameters:</p>
+<p>The package depends on the <em>dplyr</em>, <em>gdistance</em>, <em>raster</em> and <em>tidyr</em> packages. The function needed to go from the projected rasters to the .dat files used by AMPL is called <em>MultiSppQuad</em>, which has the following parameters:</p>
 <ul>
 <li><em>Stacklist:</em> a list of Stacks with a stack for each species. Each stack contains eight rasters of corresponding to eight time slices showing a binary response of where the species suitable habitat is, all stacks have to have the same extent.</li>
-<li><em>Dist:</em> the maximum dispersal distance of the species modeled in the AMPL model, it can be one distance or a vector of distances.</li>
+<li><em>Dist:</em> the maximum dispersal distance (in meters) of the species to be modeled in the AMPL model, it can be one distance or a vector of distances.</li>
 <li><em>name:</em> the name of the .dat file that will be exported.</li>
 <li><em>nchains:</em> the target number of chains</li>
 <li><em>costlayer:</em> raster with the costs of each cell</li>
 </ul>
-<p>This function returns a .dat file needed to feed the <em>AMPL</em> model</p>
-<p>The function depends on the <em>dplyr</em>, <em>gdistance</em>, <em>raster</em> and <em>tidyr</em> packages</p>
-<p>as an example to run the data using the data in the repository:</p>
+<p>This function returns a <em>.dat</em> file needed to feed the <em>AMPL</em> model</p>
+<p>As an example to run the function using the example data set in the Package:</p>
 <pre><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)
 pacman::p_load(dplyr, gdistance, raster, tidyr)
 library(QuadCostAmpl)
 
 data(&quot;BinSpp&quot;)
 data(&quot;Cost&quot;)
-MultiSppQuad(Stacklist = BinSpp, Dist = 1000000, name = &quot;Two&quot;, costlayer = Cost)
-</code></pre>
+MultiSppQuad(Stacklist = BinSpp, Dist = 1000000, name = &quot;Two&quot;, costlayer = Cost)</code></pre>
+<p>This will create a file called <em>Two.dat</em> in your working directory with the data of the two hypothetical species developed for the package.</p>
 </div>
 <div id="going-from-.dat-files-to-optimization-results" class="section level3">
 <h3>Going from .dat files to optimization results</h3>
 <div id="models" class="section level4">
 <h4>Models</h4>
-<p>The <em>.dat</em> file will be passed through a model (<em>.mod</em> file), in this repository there are two models:</p>
+<p>The <em>.dat</em> file will be passed through a model (<em>.mod</em> file). In this repository there are two models:</p>
 <ul>
 <li><p><em>MultiCost.mod:</em> Which will take a <em>.dat</em> database with one or multiple species and a layer of costs asociated with it, and minimize the buying cost asuming quadratic costs for the flow.</p></li>
 <li><p><em>MultiCostLM.mod:</em> Which will take a <em>.dat</em> database with one or multiple species and a layer of costs asociated with it, and minimize the buying cost asuming linear costs for the flow, this model was included only to compare the results of the quadratic cost.</p></li>
@@ -160,13 +159,13 @@ MultiSppQuad(Stacklist = BinSpp, Dist = 1000000, name = &quot;Two&quot;, costlay
 </div>
 <div id="running-the-models" class="section level4">
 <h4>Running the models</h4>
-<p><em>.run</em> Files when scripted correctly can make running models in AMPL a lot easier, what they usually do is to load a <em>.dat</em> file (your data), and pass it through a <em>.mod</em> file (your model), and it returns your results in a <em>.txt</em> file.</p>
+<p><em>.run</em> files when scripted correctly can make running models in AMPL a lot easier. What they usually do is to load a <em>.dat</em> file (your data), and pass it through a <em>.mod</em> file (your model), and it returns your results in a <em>.txt</em> file.</p>
 <p>If you have a <em>.run</em> file, lets call it <code>Example.run</code>, the only thing you have to do is to run the following code in AMPL:</p>
 <pre><code>include Example.run;</code></pre>
 <p>This repository has two <em>.run</em> files:</p>
 <ul>
-<li><p><em>MultiSpp.run:</em> This file will run a <em>.dat</em> file with multiple species through one of the <em>.mod</em> models stated above, and it will return two <em>.txt</em> files with results. One with the index proposed by phillips for each cell corresponding to the maximum amont of flow that will pass through a cell through any of the time silces, that is one value per cell. Also, second <em>.txt</em> file with the flow passing through each cell on each time, that is one value per cell per time slice.</p></li>
-<li><p><em>MultiSppLoop.run:</em> Does the same as the <em>.run</em> file above, but it can loop through several <em>.dat</em> files, the only clause is that these files have the same name and only differ on a number indicating the ID of the case, or species to be looped throug</p></li>
+<li><p><em>MultiSpp.run:</em> This file will run a <em>.dat</em> file with multiple species through one of the <em>.mod</em> models stated above, and it will return two <em>.txt</em> files with results. One with the index proposed by Phillips for each cell corresponding to the maximum amount of flow that will pass through a cell in any of the time slices, that is one value per cell. Also, second <em>.txt</em> file with the flow passing through each cell on each time, that is one value per cell per time slice.</p></li>
+<li><p><em>MultiSppLoop.run:</em> Does the same as the <em>.run</em> file above, but it can loop through several <em>.dat</em> files, the only clause is that these files have the same name and only differ on a number indicating the ID of the case, or species to be looped through.</p></li>
 </ul>
 </div>
 </div>

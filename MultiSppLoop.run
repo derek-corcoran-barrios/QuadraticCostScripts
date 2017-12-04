@@ -8,12 +8,12 @@ set CASES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
 
 for{j in CASES}{
 	reset data;
-	data ("F:\SPARC\RProjects\Transitions\SPP139_" & j & ".dat"); 
+	data ("Two_" & j & ".dat"); 
 	option solver './gurobi';
  	solve;
-	print {s in SP,v in V}: s,v,max{t in 0..T} y[s,v,t] > ("F:\SPARC\RProjects\Transitions\SPP139_" & j & ".txt");
-	close ("F:\SPARC\RProjects\Transitions\SPP139_" & j & ".txt");
-	print {s in SP,v in V, t in 0..T}: s,v,t,y[s,v,t] > ("F:\SPARC\RProjects\Transitions\SPP139y_" & j & ".txt");
-	close ("F:\SPARC\RProjects\Transitions\SPP139y_" & j & ".txt");
+	print {s in SP,v in V}: s,v,max{t in 0..T} y[s,v,t] > ("Two_" & j & ".txt");
+	close ("Two_" & j & ".txt");
+	print {s in SP,v in V, t in 0..T}: s,v,t,y[s,v,t] > ("TwoY_" & j & ".txt");
+	close ("TwoY_" & j & ".txt");
 }
 
