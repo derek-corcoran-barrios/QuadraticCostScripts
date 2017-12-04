@@ -99,6 +99,16 @@ head(Index[[2]])
 
 #### Turning the stack into a gif
 
+In order to inspect the Species flow more closely the *GetQuadFlow* function was developed, this takes the second result of the *AMPL* model and turns it into a stack or a gif for the one of the species, while making a data frame with the result of every species. The parameters of the function are the following:
+
+* *Stacklist:* The original stacklist used in function MultiSppQuad.
+* *AmplFile:* The path to the file given by the AMPL model.
+* *Species:*	An interger number of the species to be ploted. Even when the plot is made for this species, the data frame is made for all the species.
+* *plot:*	logical, wether to plot or not the stack, defaults to TRUE
+* *gif:*	logical, wether to make a gif or not the stack, defaults to FALSE
+
+An example using the data in the repository:
+
 ```
 #Load the data
 data("BinSpp")
