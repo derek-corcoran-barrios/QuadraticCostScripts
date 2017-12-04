@@ -96,5 +96,26 @@ head(Index[[2]])
 |SpeciesA |      6| 1.0000000|
 |SpeciesA |      7| 1.0000000|
 |SpeciesA |     14| 0.8151449|
+
 #### Turning the stack into a gif
 
+```
+#Load the data
+data("BinSpp")
+#Use the function 
+Index2 <- GetQuadFlow(Stacklist = BinSpp, AmplFile = "https://raw.githubusercontent.com/derek-corcoran-barrios/QuadraticCostScripts/master/TwoY.txt", Species = 1, plot = FALSE, gif = TRUE)
+```
+
+![title2](https://github.com/derek-corcoran-barrios/QuadraticCostScripts/blob/master/animation.gif)
+
+head(Index2[[2]])
+
+
+|Species  | CellID| Time|     Index|
+|:--------|------:|----:|---------:|
+|SpeciesA |      3|    0| 0.1848551|
+|SpeciesA |      3|    1| 0.0546383|
+|SpeciesA |      3|    2| 0.0000000|
+|SpeciesA |      3|    3| 0.0000000|
+|SpeciesA |      3|    4| 0.0000000|
+|SpeciesA |      3|    5| 0.0000000|
